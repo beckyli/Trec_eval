@@ -3,6 +3,8 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
-                       url(r'^trec/', include('trec.urls')),
-                       url(r'^accounts/', include('registration.backends.simple.urls')),
+                       url(r'^', include('trec.urls')),
+                       url(r'^logout/$', 'django.contrib.auth.views.logout',
+                           {'next_page': '/'}),
+                       url(r'^', include('django.contrib.auth.urls')),
 )

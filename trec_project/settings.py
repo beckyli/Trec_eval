@@ -53,7 +53,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'trec',
-    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -100,7 +99,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-REGISTRATION_OPEN = False # we use our own registration
-REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = '/trec/'
-LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
