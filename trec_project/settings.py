@@ -27,7 +27,6 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     TEMPLATE_PATH,
-    '/Users/james/Documents/WAD2/trec_project/templates'
 )
 
 # Quick-start development settings - unsuitable for production
@@ -54,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'trec',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -99,3 +99,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REGISTRATION_OPEN = False # we use our own registration
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/trec/'
+LOGIN_URL = '/accounts/login/'

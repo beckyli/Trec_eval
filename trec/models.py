@@ -1,17 +1,16 @@
+from django.contrib.auth.models import User
 from django.db import models
-
-# Create your models here.
 
 class Researcher(models.Model):
 
-    username = models.CharField(max_length=128, unique=True)
-    profile_pic = models.ImageField(name='avatar', width_field=200, height_field=200)
-    website = models.CharField(max_length=1024)
+    user = models.OneToOneField(User)
+    profile_pic = models.ImageField(upload_to='profile_images', blank=True)
+    website = models.URLField(blank=True)
     display_name = models.CharField(max_length=128)
-    organisation = models.CharField(max_length=128)
+    organisation = models.CharField(max_length=128, blank=True)
 
     def __unicode__(self):
-        return self.username
+        return self.user.username
 
 class Track(models.Model):
 

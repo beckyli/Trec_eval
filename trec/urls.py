@@ -5,9 +5,9 @@ from trec import views
 from django.conf import settings
 
 urlpatterns = patterns('',
-        url(r'^$', views.index, name='index'),
-
-    	)
+                       url(r'^$', views.index, name='index'),
+                       url(r'^register/$', views.register, name='register'),
+)
 
 
 if settings.DEBUG:

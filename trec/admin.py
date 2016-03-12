@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from trec.models import *
+
+admin.site.register(Researcher)
+admin.site.register(Track)
+admin.site.register(Task)
+admin.site.register(Run)
