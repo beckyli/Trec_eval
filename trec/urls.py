@@ -5,6 +5,7 @@ from django.conf import settings
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
                        url(r'^register/$', views.register, name='register'),
+                       url(r'^profile/$', views.profile, name='profile'),
 )
 
 if settings.DEBUG:
