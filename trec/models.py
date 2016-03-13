@@ -15,7 +15,7 @@ class Researcher(models.Model):
 class Track(models.Model):
 
     title = models.CharField(max_length=128, unique=True)
-    track_url = models.CharField(max_length=1024)
+    track_url = models.URLField()
     description = models.CharField(max_length=1024)
     genre = models.CharField(max_length=1024)
 
@@ -26,10 +26,10 @@ class Task(models.Model):
 
     track = models.ForeignKey(Track)
     title = models.CharField(max_length=128, unique=True)
-    task_url = models.CharField(max_length=1024)
+    task_url = models.URLField()
     description = models.CharField(max_length=1024)
     year = models.TimeField()
-    judgementFile = models.FileField()
+    judgement_file = models.FileField(upload_to='judgement_files')
 
     def __unicode__(self):
         return self.title
@@ -40,33 +40,33 @@ class Run(models.Model):
     task = models.ForeignKey(Task)
     name = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=1024)
-    results_file = models.FileField()
-    map = models.FloatField()
-    p10 = models.FloatField()
-    p20 = models.FloatField()
+    results_file = models.FileField(upload_to='results')
+    map = models.FloatField(null=True)
+    p10 = models.FloatField(null=True)
+    p20 = models.FloatField(null=True)
 
-    runTypes = (
+    run_types = (
         ("a", "Automatic"),
         ("m", "Manual"),
     )
-    runType = models.CharField(max_length=1, choices=runTypes)
+    run_type = models.CharField(max_length=1, choices=run_types)
 
-    queryTypes = (
+    query_types = (
         ("title", "Title"),
         ("ti+des", "Title and description"),
         ("dscrp", "Description"),
         ("all", "All"),
         ("other", "Other"),
     )
-    queryType = models.CharField(max_length=6, choices=queryTypes)
+    query_type = models.CharField(max_length=6, choices=query_types)
 
-    feedbackTypes = (
+    feedback_types = (
         ("none", "None"),
         ("pseud", "Pseudo"),
         ("rel", "Relevance"),
         ("other", "Other")
     )
-    feedbackType = models.CharField(max_length=5, choices=feedbackTypes)
+    feedback_type = models.CharField(max_length=5, choices=feedback_types)
 
     def __unicode__(self):
         return self.name
