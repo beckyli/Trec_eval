@@ -1,13 +1,17 @@
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 
 from trec.forms import *
 from trec.models import Researcher, Task
 from trec.utils import run_trec_eval
 
 def index(request):
-    return HttpResponse("This is the index")
+    return render(request, 'trec/index.html')
+
+def about(request):
+    return render(request, 'trec/about.html')
 
 def register(request):
     if request.method == 'POST':
@@ -31,6 +35,32 @@ def register(request):
         researcher_form = ResearcherForm()
     return render(request, 'trec/register.html',
                   {'user_form': user_form, 'researcher_form': researcher_form})
+
+
+def user_login(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponse("Your TREC Evaluator account is disabled.")
+        else:
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'trec/login.html', {})
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 @login_required
 def profile(request):
