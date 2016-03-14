@@ -27,15 +27,16 @@ def register(request):
             if 'profile_pic' in request.FILES:
                 researcher.profile_pic = request.FILES['profile_pic']
             researcher.save()
-            return redirect('/')
-        else:
-            print user_form.errors, researcher_form.errors
+
+            user = authenticate(username=user.username,
+                                password=user_form.cleaned_data['password'])
+            login(request, user)
+            return redirect(index)
     else:
         user_form = UserForm()
         researcher_form = ResearcherForm()
     return render(request, 'trec/register.html',
                   {'user_form': user_form, 'researcher_form': researcher_form})
-
 
 def user_login(request):
 
@@ -52,12 +53,10 @@ def user_login(request):
             else:
                 return HttpResponse("Your TREC Evaluator account is disabled.")
         else:
-            print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'trec/login.html', {})
 
-@login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
