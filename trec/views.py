@@ -67,7 +67,7 @@ def profile(request):
     user = request.user
     researcher = Researcher.objects.get(user=user)
     if request.method == 'POST':
-        user_form = UserUpdateForm(equest.POST, instance=user)
+        user_form = UserUpdateForm(request.POST, instance=user)
         researcher_form = ResearcherForm(request.POST, instance=researcher)
         if user_form.is_valid() and researcher_form.is_valid():
             user.save()
