@@ -4,7 +4,7 @@
     <title>Registration</title>
   </head>
   <body>
-    <form id="user_form" method="post" action="/register/"
+  <form id="user_form" method="post" action="{% url 'register' %}"
           enctype="multipart/form-data">
       {% csrf_token %}
       {{ user_form.as_p }}

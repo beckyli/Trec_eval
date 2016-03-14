@@ -7,6 +7,7 @@ from trec.forms import *
 from trec.models import Researcher, Task
 from trec.utils import run_trec_eval
 
+
 def index(request):
     return render(request, 'trec/index.html')
 
@@ -62,12 +63,18 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+
+@login_required
+def tasks(request):
+    tasks = Task.objects.all()
+
+    return render(request, 'trec/task.html', {'tasks': tasks})
 @login_required
 def profile(request):
     user = request.user
     researcher = Researcher.objects.get(user=user)
     if request.method == 'POST':
-        user_form = UserUpdateForm(equest.POST, instance=user)
+        user_form = UserUpdateForm(request.POST, instance=user)
         researcher_form = ResearcherForm(request.POST, instance=researcher)
         if user_form.is_valid() and researcher_form.is_valid():
             user.save()

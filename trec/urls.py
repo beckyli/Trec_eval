@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
-from trec import views
 from django.conf import settings
+
+from trec import views
 
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
@@ -10,6 +11,7 @@ urlpatterns = patterns('',
                        url(r'^logout/$', views.user_logout, name='logout'),
                        url(r'^profile/$', views.profile, name='profile'),
                        url(r'^task/(?P<task_id>\d+)/submit/$', views.submit_run, name='submit_run'),
+                       url(r'^tasks/$', views.tasks, name="tasks"),
 )
 
 if settings.DEBUG:
