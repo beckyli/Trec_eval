@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>TREC Evaluator</title>
-    </head>
+{% extends 'trec/base.html' %}
 
-    <body>
-        <h1>Login to TREC</h1>
+{% load staticfiles %}
 
-        <form id="login_form" method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            Username: <input type="text" name="username" value="" size="50" />
-            <br />
-            Password: <input type="password" name="password" value="" size="50" />
-            <br />
+{% block body_block %}
 
-            <input type="submit" value="submit" />
+<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+<form class="form-signin" role="form" method="post" action=".">
+{% csrf_token %}
+
+<h2 class="form-signin-heading">Please sign in</h2>
+<input class="form-control" placeholder="Username" id="id_username" maxlength="254" name="username" type="text" required autofocus=""/>
+<input type="password" class="form-control" placeholder="Password" id="id_password" name="password"  required />
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" >Sign in</button>
         </form>
 
-    </body>
-</html>
+{% endblock %}
