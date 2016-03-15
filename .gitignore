@@ -1,5 +1,6 @@
 *.pyc
-/.idea*
+/.idea/*
 db.sqlite3
 /media/*
 .coverage
+trec_eval
