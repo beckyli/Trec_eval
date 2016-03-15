@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from trec.models import Researcher, Run
+from trec.models import Researcher, Run, Track
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -13,6 +13,12 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields= ('username',)
+
+class TrackForm(forms.ModelForm):
+    class Meta:
+        model = Track
+        fields = ('title', 'track_url', 'description', 'genre')
+
 
 class ResearcherForm(forms.ModelForm):
     class Meta:

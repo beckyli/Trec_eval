@@ -1,0 +1,15 @@
+{% extends 'trec/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+
+		<h1>Here are all the runs for the {{ task.track.title }} {{ task.title }} task </h1>
+
+        <ul>
+        {% for run in runs %}
+            <li> {{ run.task.track.title }} by {{ run.researcher.display_name }} - M.A.P: {{ run.map }}, P10: {{ run.p10 }}, P20: {{ run.p20 }}</li>
+        {% endfor %}
+            </ul>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'trec/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+
+    <h1>Results</h1>
+
+
+    <h4>Here are the results of the run you submitted</h4>
+
+    <p>Track: {{ run.task.track.title }}</p>
+    <p>Task: {{ run.task.title}}</p>
+    <p>Researcher: {{ run.researcher.display_name }}</p>
+    <p>Mean average precision: {{ run.map }}</p>
+    <p>Precision at 10: {{ run.p10 }}</p>
+    <p>Precision at 20: {{run.p20 }}</p>
+    <a href="{% url 'task_results' run.task.pk %}">View other results for this task</a>
+{% endblock %}

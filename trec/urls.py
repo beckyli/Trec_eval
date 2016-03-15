@@ -11,7 +11,9 @@ urlpatterns = patterns('',
                        url(r'^logout/$', views.user_logout, name='logout'),
                        url(r'^profile/$', views.profile, name='profile'),
                        url(r'^task/(?P<task_id>\d+)/submit/$', views.submit_run, name='submit_run'),
-                       url(r'^tasks/$', views.tasks, name="tasks"),
+                       url(r'^tracks/$', views.tracks, name="tracks"),
+                       url(r'^add_track', views.add_track, name="add_track"),
+                       url(r'^task/(?P<task_id>\d+)/results/$', views.task_results, name="task_results"),
 )
 
 if settings.DEBUG:

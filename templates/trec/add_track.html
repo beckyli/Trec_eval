@@ -1,0 +1,23 @@
+{% extends 'trec/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+
+{% if user.is_superuser %}
+<h1>Welcome to the add track admin, {{ user.username }}!</h1>
+
+
+<form id="track_form" method="post" action="{% url 'add_track' %}"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ track_form.as_p }}
+    <input type="submit" name="submit" value="Submit"/>
+</form>
+
+{% else %}
+<h1>Only admins can add tracks</h1>
+{% endif %}
+
+This is the TREC evaluator homepage.
+{% endblock %}

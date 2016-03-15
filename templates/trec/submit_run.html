@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Submit a run</title>
-  </head>
-  <body>
-  <form id="user_form" method="post"
-        action="{% url 'submit_run' task.pk %}" {% comment %}/task/{{ task.pk }}/submit"{% endcomment %}
+{% extends 'trec/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+    <h3>Add run for {{ task.track.title }} {{task.track.genre }}</h3>
+  <form id="user_form" method="post" action="{% url 'submit_run' task.pk %}"
           enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
       <input type="submit" name="submit" value="Submit" />
     </form>
-  </body>
-</html>
+{% endblock %}

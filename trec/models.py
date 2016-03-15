@@ -38,7 +38,7 @@ class Task(models.Model):
     judgement_file = models.FileField(upload_to=os.path.join(MEDIA_ROOT, 'judgement_files'))
 
     def __unicode__(self):
-        return self.track.__unicode__() + ' - ' + self.title
+        return self.track.__unicode__()
 
 class Run(models.Model):
 
@@ -55,4 +55,4 @@ class Run(models.Model):
     feedback_type = models.CharField(max_length=5, choices=feedbackTypes, default=feedbackTypes[0][0])
 
     def __unicode__(self):
-        return self.task.__unicode__() + " - " + self.id.__str__()
+        return self.researcher.__unicode__() + " - " + self.task.__unicode__() + " - " + self.id.__str__()

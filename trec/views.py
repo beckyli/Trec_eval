@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect, HttpResponse
 
 from trec.forms import *
-from trec.models import Researcher, Task
+from trec.models import Researcher, Task, Track
 from trec.utils import run_trec_eval
 
 
@@ -62,12 +62,45 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+def tracks(request):
+
+    tracks = Track.objects.all()
+
+    for track in tracks:
+        track.tasks = Task.objects.filter(track=track)
+
+    return render(request, 'trec/tracks.html', {'tracks': tracks})
+
+def task_results(request, task_id):
+
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        return redirect('/')
+
+    runs = Run.objects.filter(task=task)
+
+    return render(request, 'trec/view_task_runs.html', {'runs': runs, 'task': task})
 
 @login_required
-def tasks(request):
-    tasks = Task.objects.all()
+def add_track(request):
+    user = request.user
 
-    return render(request, 'trec/task.html', {'tasks': tasks})
+    if not user.is_superuser:
+        return render(request, 'trec/add_track.html', {})
+    else:
+        if request.method == 'POST':
+            track_form = TrackForm(request.POST)
+            if track_form.is_valid():
+                track_form.save(commit=True)
+                return redirect('/')
+            else:
+                print track_form.errors
+        else:
+            track_form = TrackForm(instance=user)
+        return render(request, 'trec/add_track.html', {'track_form': track_form})
+
+
 @login_required
 def profile(request):
     user = request.user
@@ -106,7 +139,7 @@ def submit_run(request, task_id):
                                                       run.results_file.path)
             if run.map is not None:
                 run.save()
-                return redirect('/')
+                return render(request, 'trec/run.html', {'run': run})
             form._errors['results_file'] = form.error_class(
                 [u'There was a problem evaluating your results file'])
             run.delete()
