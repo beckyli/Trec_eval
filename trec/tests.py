@@ -141,3 +141,24 @@ class SubmitRunViewTest(TestCase):
         response = self.client.get('/task/1/submit/')
         self.assertEquals(response.status_code, 200)
         self.assertIn('form', response.context)
+
+    def test_bad_file(self):
+        'Should display an error message.'
+        self.set_up_user()
+        data = {'name': 'run',
+                'results_file': SimpleUploadedFile('file.jpg', 'file_content'),
+                'run_type': 'a', 'query_type': 'title', 'feedback_type': 'none'}
+        response = self.client.post('/task/1/submit/', data)
+        self.assertEquals(response.status_code, 200)
+        self.assertContains(response,
+                            'There was a problem evaluating your results file')
+
+    def test_good_file(self):
+        'Should render trec/run.html.'
+        self.set_up_user()
+        data = {'name': 'run',
+                'results_file': open(os.path.join(MEDIA_ROOT, 'results',
+                                                  'ap.trec.bm25.0.50.res'))}
+        response = self.client.post('/task/1/submit/', data)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed('trec/run.html')

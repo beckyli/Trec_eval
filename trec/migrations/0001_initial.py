@@ -17,9 +17,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('profile_pic', models.ImageField(upload_to=b'/home/paulius/trec-eval/media/profile_pics', blank=True)),
-                ('website', models.URLField(default=b'', max_length=1024)),
+                ('website', models.URLField(default=b'', max_length=1024, blank=True)),
                 ('display_name', models.CharField(default=b'', max_length=128)),
-                ('organisation', models.CharField(default=b'', max_length=128)),
+                ('organisation', models.CharField(default=b'', max_length=128, blank=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(default=b'', max_length=128)),
-                ('description', models.CharField(default=b'', max_length=1024)),
+                ('description', models.CharField(default=b'', max_length=1024, blank=True)),
                 ('results_file', models.FileField(upload_to=b'/home/paulius/trec-eval/media/results')),
                 ('map', models.FloatField(null=True)),
                 ('p10', models.FloatField(null=True)),

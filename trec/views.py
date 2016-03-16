@@ -134,7 +134,7 @@ def submit_run(request, task_id):
                 run.save()
                 return render(request, 'trec/run.html', {'run': run})
             form._errors['results_file'] = form.error_class(
-                [u'There was a problem evaluating your results file'])
+                ['There was a problem evaluating your results file'])
             run.delete()
     else:
         form = RunForm()

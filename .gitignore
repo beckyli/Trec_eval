@@ -5,5 +5,6 @@ db.sqlite3
 !/media/judgement_files/aq.trec2005.qrels
 !/media/judgement_files/dg.trec.qrels
 !/media/judgement_files/ap.trec.qrels
+!/media/results/ap.trec.bm25.0.50.res
 .coverage
 trec_eval
