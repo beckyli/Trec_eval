@@ -30,6 +30,9 @@ def populate():
                    disName="IRJobs",
                    org="Royal Insitute of Mayhem")
 
+    for name in ['jill', 'jim', 'joe', 'bob', 'jen']:
+        add_researcher(name)
+
     rob2004 = add_track(tit="Robust2004",
                         url="http://trec.nist.gov/data/t13_robust.html",
                         desc="News Retrieval",
