@@ -19,7 +19,6 @@ class TrackForm(forms.ModelForm):
         model = Track
         fields = ('title', 'track_url', 'description', 'genre')
 
-
 class ResearcherForm(forms.ModelForm):
     class Meta:
         model = Researcher

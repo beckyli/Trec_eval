@@ -8,26 +8,25 @@ from django.core.files import File
 from trec.models import *
 from trec_project.settings import MEDIA_ROOT
 
-
 def populate():
     add_researcher(uname="ASU",
-                   disName="Alpha Team",
+                   dis_name="Alpha Team",
                    org="AS University")
 
     add_researcher(uname="CK",
-                   disName="Chaos and Kontrol",
+                   dis_name="Chaos and Kontrol",
                    org="CK university")
 
     add_researcher(uname="HK",
-                   disName="HongKongIR",
+                   dis_name="HongKongIR",
                    org="HK University")
 
     add_researcher(uname="ICT",
-                   disName="ICTer",
+                   dis_name="ICTer",
                    org="University of ICT")
 
     add_researcher(uname="RIM",
-                   disName="IRJobs",
+                   dis_name="IRJobs",
                    org="Royal Insitute of Mayhem")
 
     for name in ['jill', 'jim', 'joe', 'bob', 'jen']:
@@ -62,7 +61,8 @@ def populate():
              url="http://trec.nist.gov/data/t14_robust.html",
              desc="For each topic find all the relevant documents",
              y="2005",
-             judge=os.path.join(MEDIA_ROOT, "judgement_files", "aq.trec2005.qrels"))
+             judge=os.path.join(MEDIA_ROOT, "judgement_files",
+                                "aq.trec2005.qrels"))
 
     add_task(trac=tera,
              tit="Ad Hoc Topic Retrieval",
@@ -85,14 +85,14 @@ def populate():
         for task in Task.objects.filter(track=track):
             print "- {0} - {1}".format(str(track), str(task))
 
-def add_researcher(uname, disName="", org="", pro_pic=None, web=""):
+def add_researcher(uname, dis_name="", org="", pro_pic=None, web=""):
     u = User.objects.get_or_create(username=uname)[0]
     u.set_password(uname)
     u.save()
     r = Researcher.objects.get_or_create(user=u)[0]
     r.profile_pic = pro_pic
     r.website = web
-    r.display_name = disName
+    r.display_name = dis_name
     r.organisation = org
     r.save()
     return r
@@ -103,7 +103,6 @@ def add_track(tit, desc="", g="", url=""):
     t.description = desc
     t.genre = g
     t.save()
-
     return t
 
 def add_task(trac, tit, url="", desc="", y="", judge=None):

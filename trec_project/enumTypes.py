@@ -1,5 +1,3 @@
-__author__ = 'james'
-
 runTypes = (
     ("a", "Automatic"),
     ("m", "Manual"),

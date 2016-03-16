@@ -99,4 +99,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# used by the login_required decorator
 LOGIN_URL = '/login/'

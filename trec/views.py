@@ -1,12 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 
 from trec.forms import *
 from trec.models import Researcher, Task, Track
 from trec.utils import run_trec_eval
-
 
 def index(request):
     return render(request, 'trec/index.html')
@@ -40,7 +39,6 @@ def register(request):
                   {'user_form': user_form, 'researcher_form': researcher_form})
 
 def user_login(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -50,7 +48,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return redirect(index)
             else:
                 return HttpResponse("Your TREC Evaluator account is disabled.")
         else:
@@ -60,10 +58,9 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return redirect(index)
 
 def tracks(request):
-
     tracks = Track.objects.all()
 
     for track in tracks:
@@ -72,15 +69,15 @@ def tracks(request):
     return render(request, 'trec/tracks.html', {'tracks': tracks})
 
 def task_results(request, task_id):
-
     try:
         task = Task.objects.get(pk=task_id)
     except Task.DoesNotExist:
-        return redirect('/')
+        return redirect(index)
 
     runs = Run.objects.filter(task=task)
 
-    return render(request, 'trec/view_task_runs.html', {'runs': runs, 'task': task})
+    return render(request, 'trec/view_task_runs.html',
+                  {'runs': runs, 'task': task})
 
 @login_required
 def add_track(request):
@@ -93,13 +90,11 @@ def add_track(request):
             track_form = TrackForm(request.POST)
             if track_form.is_valid():
                 track_form.save(commit=True)
-                return redirect('/')
-            else:
-                print track_form.errors
+                return redirect(index)
         else:
             track_form = TrackForm(instance=user)
-        return render(request, 'trec/add_track.html', {'track_form': track_form})
-
+        return render(request, 'trec/add_track.html',
+                      {'track_form': track_form})
 
 @login_required
 def profile(request):
@@ -125,7 +120,7 @@ def submit_run(request, task_id):
     try:
         task = Task.objects.get(pk=task_id)
     except Task.DoesNotExist:
-        return redirect('/')
+        return redirect(index)
     if request.method == 'POST':
         form = RunForm(request.POST, request.FILES)
         if form.is_valid():
