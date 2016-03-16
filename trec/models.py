@@ -11,9 +11,9 @@ class Researcher(models.Model):
 
     user = models.OneToOneField(User)
     profile_pic = models.ImageField(upload_to=os.path.join(MEDIA_ROOT, 'profile_pics'), blank=True)
-    website = models.URLField(max_length=1024, default="")
+    website = models.URLField(max_length=1024, default="", blank=True)
     display_name = models.CharField(max_length=128, default="")
-    organisation = models.CharField(max_length=128, default="")
+    organisation = models.CharField(max_length=128, default="", blank=True)
 
     def __unicode__(self):
         return self.user.username

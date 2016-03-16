@@ -114,8 +114,6 @@ def profile(request):
                 researcher.profile_pic = request.FILES['profile_pic']
             researcher.save()
             return redirect('/')
-        else:
-            print user_form.errors, researcher_form.errors
     else:
         user_form = UserUpdateForm(instance=user)
         researcher_form = ResearcherForm(instance=researcher)
@@ -143,8 +141,6 @@ def submit_run(request, task_id):
             form._errors['results_file'] = form.error_class(
                 [u'There was a problem evaluating your results file'])
             run.delete()
-        else:
-            print form.errors
     else:
         form = RunForm()
     return render(request, 'trec/submit_run.html', {'form': form, 'task': task})
