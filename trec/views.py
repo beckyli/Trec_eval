@@ -79,6 +79,26 @@ def task_results(request, task_id):
     return render(request, 'trec/view_task_runs.html',
                   {'runs': runs, 'task': task})
 
+def researchers(request):
+
+    researchers = Researcher.objects.all()
+
+    return render(request, 'trec/researchers.html', {'researchers': researchers})
+
+def researcher(request, researcher_id):
+
+    try:
+        user = User.objects.get(username=researcher_id)
+        researcher = Researcher.objects.get(user=user)
+
+    except User.DoesNotExist, Researcher.DoesNotExist:
+        return redirect('/')
+
+
+    runs = Run.objects.filter(researcher=researcher)
+
+    return render(request, 'trec/researcher.html', {"runs": runs, 'researcher': researcher})
+
 @login_required
 def add_track(request):
     user = request.user
@@ -93,11 +113,19 @@ def add_track(request):
                 return redirect(index)
         else:
             track_form = TrackForm(instance=user)
-        return render(request, 'trec/add_track.html',
-                      {'track_form': track_form})
+        return render(request, 'trec/add_track.html', {'track_form': track_form})
 
 @login_required
 def profile(request):
+    user = request.user
+    researcher = Researcher.objects.get(user=user)
+    runs = Run.objects.filter(researcher=researcher)
+
+    return render(request, 'trec/researcher.html', {'researcher': researcher, 'runs': runs})
+
+
+@login_required
+def edit_profile(request):
     user = request.user
     researcher = Researcher.objects.get(user=user)
     if request.method == 'POST':
@@ -112,7 +140,7 @@ def profile(request):
     else:
         user_form = UserUpdateForm(instance=user)
         researcher_form = ResearcherForm(instance=researcher)
-    return render(request, 'trec/profile.html',
+    return render(request, 'trec/edit_profile.html',
                   {'user_form': user_form, 'researcher_form': researcher_form})
 
 @login_required

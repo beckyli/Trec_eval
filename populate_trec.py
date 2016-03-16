@@ -8,29 +8,28 @@ from django.core.files import File
 from trec.models import *
 from trec_project.settings import MEDIA_ROOT
 
+print MEDIA_ROOT
+
 def populate():
     add_researcher(uname="ASU",
-                   dis_name="Alpha Team",
+                   disName="Alpha Team",
                    org="AS University")
 
     add_researcher(uname="CK",
-                   dis_name="Chaos and Kontrol",
+                   disName="Chaos and Kontrol",
                    org="CK university")
 
     add_researcher(uname="HK",
-                   dis_name="HongKongIR",
+                   disName="HongKongIR",
                    org="HK University")
 
     add_researcher(uname="ICT",
-                   dis_name="ICTer",
+                   disName="ICTer",
                    org="University of ICT")
 
     add_researcher(uname="RIM",
-                   dis_name="IRJobs",
+                   disName="IRJobs",
                    org="Royal Insitute of Mayhem")
-
-    for name in ['jill', 'jim', 'joe', 'bob', 'jen']:
-        add_researcher(name)
 
     rob2004 = add_track(tit="Robust2004",
                         url="http://trec.nist.gov/data/t13_robust.html",
@@ -61,8 +60,7 @@ def populate():
              url="http://trec.nist.gov/data/t14_robust.html",
              desc="For each topic find all the relevant documents",
              y="2005",
-             judge=os.path.join(MEDIA_ROOT, "judgement_files",
-                                "aq.trec2005.qrels"))
+             judge=os.path.join(MEDIA_ROOT, "judgement_files", "aq.trec2005.qrels"))
 
     add_task(trac=tera,
              tit="Ad Hoc Topic Retrieval",
@@ -85,14 +83,17 @@ def populate():
         for task in Task.objects.filter(track=track):
             print "- {0} - {1}".format(str(track), str(task))
 
-def add_researcher(uname, dis_name="", org="", pro_pic=None, web=""):
+def add_researcher(uname, pro_pic=None, disName="", org="", web=""):
     u = User.objects.get_or_create(username=uname)[0]
     u.set_password(uname)
     u.save()
     r = Researcher.objects.get_or_create(user=u)[0]
-    r.profile_pic = pro_pic
+    if pro_pic == None:
+        r.profile_pic = File(open(os.path.join(MEDIA_ROOT, "profile_pics", "default.jpg")))
+    else:
+        r.profile_pic = pro_pic
     r.website = web
-    r.display_name = dis_name
+    r.display_name = disName
     r.organisation = org
     r.save()
     return r
@@ -103,6 +104,7 @@ def add_track(tit, desc="", g="", url=""):
     t.description = desc
     t.genre = g
     t.save()
+
     return t
 
 def add_task(trac, tit, url="", desc="", y="", judge=None):

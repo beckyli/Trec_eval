@@ -1,0 +1,58 @@
+{% extends 'trec/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-6 col-sm-3">
+
+            <img height="200px" width="200px" class="img-circle" src="{{ researcher.profile_pic.url }}"/>
+        </div>
+         <div class="col-xs-6 col-sm-3">
+             <p class="lead">Username: {{ researcher.display_name }}</p>
+             <p class="lead">Website: {{ researcher.website }}</p>
+             <p class="lead">Organisation: {{ researcher.organisation }}</p>
+            {% if user == researcher.user %}
+            <a class="lead" href="{% url 'edit_profile' %}">Edit your profile</a>
+             {% endif %}
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+         <div class="col-xs-6 col-sm-3">
+            <h1> {{ researcher.display_name }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <table class="table table-hover">
+            <caption>Here are all the runs by {{ researcher.display_name }}</caption>
+            <thead>
+            <tr>
+                <th>Track</th>
+                <th>Mean Average Precision</th>
+                <th>Precision at 10</th>
+                <th>Precision at 20</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for run in runs %}
+            <tr>
+                <td><a href="{% url 'task_results' run.task.pk %}">{{ run.task.track.title }}</a></td>
+                <td>{{ run.map }}</td>
+                <td>{{ run.p10 }}</td>
+                <td>{{ run.p20 }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
