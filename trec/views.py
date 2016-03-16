@@ -8,7 +8,9 @@ from trec.models import Researcher, Task, Track
 from trec.utils import run_trec_eval
 
 def index(request):
-    return render(request, 'trec/index.html')
+    track_list = Track.objects.order_by('-title')
+    context_dict = {'tracks':track_list}
+    return render(request, 'trec/index.html', context_dict)
 
 def about(request):
     return render(request, 'trec/about.html')
