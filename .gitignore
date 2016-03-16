@@ -2,5 +2,8 @@
 /.idea/*
 db.sqlite3
 /media/*
+!/media/judgement_files/aq.trec2005.qrels
+!/media/judgement_files/dg.trec.qrels
+!/media/judgement_files/ap.trec.qrels
 .coverage
 trec_eval
