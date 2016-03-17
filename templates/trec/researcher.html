@@ -45,7 +45,7 @@
             <tbody>
             {% for run in runs %}
             <tr>
-                <td><a href="{% url 'task_results' run.task.pk %}">{{ run.task.track.title }}</a></td>
+                <td><a href="{% url 'track' run.task.track.slug %}">{{ run.task.track.title }}</a></td>
                 <td>{{ run.map }}</td>
                 <td>{{ run.p10 }}</td>
                 <td>{{ run.p20 }}</td>

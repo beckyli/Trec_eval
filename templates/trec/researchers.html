@@ -21,7 +21,7 @@
                          <a href="{% url 'researcher' researcher.user.username %}">
                           <img height="200px" width="200px" class="img-circle" src="{{ researcher.profile_pic.url }}"/> </a>
                      </td>
-                    <td>{{ researcher.display_name }}</td>
+                    <td>{{ researcher.user.username }}</td>
                     <td>{{ researcher.organisation }}</td>
                     <td><a href="{{ researcher.website }}">{{researcher.website}}</a></td>
 

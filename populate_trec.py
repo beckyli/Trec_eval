@@ -8,28 +8,29 @@ from django.core.files import File
 from trec.models import *
 from trec_project.settings import MEDIA_ROOT
 
-print MEDIA_ROOT
-
 def populate():
     add_researcher(uname="ASU",
-                   disName="Alpha Team",
+                   dis_name="Alpha Team",
                    org="AS University")
 
     add_researcher(uname="CK",
-                   disName="Chaos and Kontrol",
+                   dis_name="Chaos and Kontrol",
                    org="CK university")
 
     add_researcher(uname="HK",
-                   disName="HongKongIR",
+                   dis_name="HongKongIR",
                    org="HK University")
 
     add_researcher(uname="ICT",
-                   disName="ICTer",
+                   dis_name="ICTer",
                    org="University of ICT")
 
     add_researcher(uname="RIM",
-                   disName="IRJobs",
+                   dis_name="IRJobs",
                    org="Royal Insitute of Mayhem")
+
+    for name in ['jill', 'jim', 'joe', 'bob', 'jen']:
+        add_researcher(name)
 
     rob2004 = add_track(tit="Robust2004",
                         url="http://trec.nist.gov/data/t13_robust.html",
@@ -83,7 +84,7 @@ def populate():
         for task in Task.objects.filter(track=track):
             print "- {0} - {1}".format(str(track), str(task))
 
-def add_researcher(uname, pro_pic=None, disName="", org="", web=""):
+def add_researcher(uname, pro_pic=None, dis_name="", org="", web=""):
     u = User.objects.get_or_create(username=uname)[0]
     u.set_password(uname)
     u.save()
@@ -93,7 +94,7 @@ def add_researcher(uname, pro_pic=None, disName="", org="", web=""):
     else:
         r.profile_pic = pro_pic
     r.website = web
-    r.display_name = disName
+    r.display_name = dis_name
     r.organisation = org
     r.save()
     return r

@@ -2,6 +2,7 @@ import os
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.template.defaultfilters import slugify
 
 from trec_project.enumTypes import runTypes, feedbackTypes, queryTypes
 from trec_project.settings import MEDIA_ROOT
@@ -27,6 +28,13 @@ class Track(models.Model):
     track_url = models.URLField(max_length=1024, default="")
     description = models.CharField(max_length=1024, default="")
     genre = models.CharField(max_length=1024, default="")
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+
+        self.slug = slugify(self.title)
+        super(Track, self).save(*args, **kwargs)
+
 
     def __unicode__(self):
         return self.title

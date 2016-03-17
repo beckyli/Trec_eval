@@ -70,6 +70,16 @@ def tracks(request):
 
     return render(request, 'trec/tracks.html', {'tracks': tracks})
 
+def track(request, track_slug):
+    try:
+        track = Track.objects.get(slug=track_slug)
+    except Track.DoesNotExist:
+        return redirect(index)
+
+    tasks = Task.objects.filter(track=track)
+
+    return render(request, 'trec/track.html',{'tasks': tasks, 'track': track})
+
 def task_results(request, task_id):
     try:
         task = Task.objects.get(pk=task_id)
