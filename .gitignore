@@ -5,7 +5,6 @@ db.sqlite3
 trec_eval
 
 /media/profile_pics/*
-!/media/profile_pics/default.jpg
 
 /media/judgement_files/*
 !/media/judgement_files/aq.trec2005.qrels

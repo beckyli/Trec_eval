@@ -4,31 +4,27 @@
 
 {% block body_block %}
 
-      <table class = "table table-hover">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Researcher Name</th>
-                <th>Organisation</th>
-                <th>Website</th>
-            </tr>
-            </thead>
-          <tbody>
-        {% for researcher in researchers %}
-
-                <tr>
-                     <td>
-                         <a href="{% url 'researcher' researcher.user.username %}">
-                          <img height="200px" width="200px" class="img-circle" src="{{ researcher.profile_pic.url }}"/> </a>
-                     </td>
-                    <td>{{ researcher.user.username }}</td>
-                    <td>{{ researcher.organisation }}</td>
-                    <td><a href="{{ researcher.website }}">{{researcher.website}}</a></td>
-
-                </tr>
-
-        {% endfor %}
-        </tbody>
-        </table>
-
+<table class = "table table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Researcher Name</th>
+      <th>Organisation</th>
+      <th>Website</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for researcher in researchers %}
+    <tr>
+      <td>
+        <a href="{% url 'researcher' researcher.user.username %}">
+          <img height="200px" width="200px" class="img-circle" src="{{ researcher.get_profile_pic_url }}"/> </a>
+      </td>
+      <td>{{ researcher.user.username }}</td>
+      <td>{{ researcher.organisation }}</td>
+      <td><a href="{{ researcher.website }}">{{researcher.website}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
