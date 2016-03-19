@@ -5,7 +5,9 @@ The purpose of this application is to provide a tool that lets researchers evalu
 # GitHub Accounts
 
 dilkas: Paulius Dilkas 2146879d
+
 gerardward3: Gerard Ward 2131783w
+
 ffindlay: Fiona Findlay 2138452f
 
 # How to Run
