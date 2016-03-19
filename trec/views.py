@@ -9,7 +9,7 @@ from trec.utils import run_trec_eval
 
 def index(request):
     track_list = Track.objects.order_by('-title')
-    context_dict = {'tracks':track_list}
+    context_dict = {'tracks': track_list}
     return render(request, 'trec/index.html', context_dict)
 
 def about(request):
@@ -41,22 +41,19 @@ def register(request):
                   {'user_form': user_form, 'researcher_form': researcher_form})
 
 def user_login(request):
+    context = {}
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
         user = authenticate(username=username, password=password)
-
         if user:
             if user.is_active:
                 login(request, user)
                 return redirect(index)
-            else:
-                return HttpResponse("Your TREC Evaluator account is disabled.")
+            context['error'] = 'Your TREC Evaluator account is disabled.'
         else:
-            return HttpResponse("Invalid login details supplied.")
-    else:
-        return render(request, 'trec/login.html', {})
+            context['error'] = 'Invalid login details supplied.'
+    return render(request, 'trec/login.html', context)
 
 def user_logout(request):
     logout(request)
@@ -64,10 +61,8 @@ def user_logout(request):
 
 def tracks(request):
     tracks = Track.objects.all()
-
     for track in tracks:
         track.tasks = Task.objects.filter(track=track)
-
     return render(request, 'trec/tracks.html', {'tracks': tracks})
 
 def track(request, track_slug):
@@ -92,24 +87,19 @@ def task_results(request, task_id):
                   {'runs': runs, 'task': task})
 
 def researchers(request):
-
     researchers = Researcher.objects.all()
+    return render(request, 'trec/researchers.html',
+                  {'researchers': researchers})
 
-    return render(request, 'trec/researchers.html', {'researchers': researchers})
-
-def researcher(request, researcher_id):
-
+def researcher(request, username):
     try:
-        user = User.objects.get(username=researcher_id)
+        user = User.objects.get(username=username)
         researcher = Researcher.objects.get(user=user)
-
-    except User.DoesNotExist, Researcher.DoesNotExist:
-        return redirect('/')
-
-
+    except (User.DoesNotExist, Researcher.DoesNotExist):
+        return redirect(index)
     runs = Run.objects.filter(researcher=researcher)
-
-    return render(request, 'trec/researcher.html', {"runs": runs, 'researcher': researcher})
+    return render(request, 'trec/researcher.html', {"runs": runs,
+                                                    'researcher': researcher})
 
 @login_required
 def add_track(request):
@@ -132,9 +122,8 @@ def profile(request):
     user = request.user
     researcher = Researcher.objects.get(user=user)
     runs = Run.objects.filter(researcher=researcher)
-
-    return render(request, 'trec/researcher.html', {'researcher': researcher, 'runs': runs})
-
+    return render(request, 'trec/researcher.html', {'researcher': researcher,
+                                                    'runs': runs})
 
 @login_required
 def edit_profile(request):
@@ -148,7 +137,7 @@ def edit_profile(request):
             if 'profile_pic' in request.FILES:
                 researcher.profile_pic = request.FILES['profile_pic']
             researcher.save()
-            return redirect('/')
+            return redirect(index)
     else:
         user_form = UserUpdateForm(instance=user)
         researcher_form = ResearcherForm(instance=researcher)
@@ -173,8 +162,8 @@ def submit_run(request, task_id):
             if run.map is not None:
                 run.save()
                 return render(request, 'trec/run.html', {'run': run})
-            form._errors['results_file'] = form.error_class(
-                ['There was a problem evaluating your results file'])
+            form.add_error('results_file',
+                           'There was a problem evaluating your results file')
             run.delete()
     else:
         form = RunForm()

@@ -108,7 +108,7 @@ def add_track(tit, desc="", g="", url=""):
 
     return t
 
-def add_task(trac, tit, url="", desc="", y="", judge=None):
+def add_task(trac, tit, judge, url="", desc="", y=""):
     t = Task.objects.get_or_create(title=tit, track=trac)[0]
     t.task_url = url
     t.description = desc
