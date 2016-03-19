@@ -11,7 +11,7 @@ from trec_project.settings import MEDIA_ROOT
 class Researcher(models.Model):
 
     user = models.OneToOneField(User)
-    profile_pic = models.ImageField(upload_to=os.path.join(MEDIA_ROOT, 'profile_pics'),
+    profile_pic = models.ImageField(upload_to=os.path.basename(os.path.join(MEDIA_ROOT, 'profile_pics')),
                                     blank=True)
     website = models.URLField(max_length=1024, default="", blank=True)
     display_name = models.CharField(max_length=128, default="")
