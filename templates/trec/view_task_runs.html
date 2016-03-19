@@ -1,6 +1,8 @@
 {% extends 'trec/base.html' %}
 
 {% load staticfiles %}
+{% load chartit % }
+{{ precision_chart|load_charts:"container" }}
 
 {% block body_block %}
 
@@ -26,5 +28,6 @@
         {% endfor %}
         </tbody>
         </table>
-
+	
+<div id='container'> Chart will be rendered here </div>
 {% endblock %}
