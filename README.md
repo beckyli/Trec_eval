@@ -17,7 +17,7 @@ jamyspex: James Macdonald 2126890m
 1. Download the necessary files.
 
         git clone https://github.com/ffindlay/trec-eval.git
-        wget http://trec.nist.gov/trec_eval/trec_eval_latest.tar.gz
+        wget https://github.com/leifos/wad/blob/master/projects/trec/trec_eval_latest.tar.gz
 2. Compile trec_eval and copy it to its place.
 
         tar -zxvf trec_eval_latest.tar.gz
