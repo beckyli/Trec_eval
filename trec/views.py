@@ -7,7 +7,6 @@ from trec.forms import *
 from trec.models import Researcher, Task, Track
 from trec.utils import run_trec_eval
 
-from chartit import DataPool, Chart
 
 def index(request):
     track_list = Track.objects.order_by('-title')
@@ -83,54 +82,10 @@ def task_results(request, task_id):
     except Task.DoesNotExist:
         return redirect(index)
 
-    runs = Run.objects.filter(task=task)
-
-    precision_data = \
-        DataPool (
-            series =
-                [{'options': {
-                    'source': Runs.objects.all()},
-                  'terms': [
-                      'researcher',
-                      'map',
-                      'p10',
-                      'p20',]}
-                 ])
-    cht = Chart(
-            data_source = precision_data,
-            series_options = [
-                 {'options':{
-                    'type': 'column',
-                    'stacking': False,
-                    'stack': 0},
-                  'terms':{ [
-                      'map']}},
-
-                 {'options':{
-                    'type': 'column',
-                    'stacking': False,
-                    'stack': 1},
-                  'terms':{ [
-                      'p10']}},
-
-                 {'options':{
-                    'type': 'column',
-                    'stacking': False,
-                    'stack': 2},
-                  'terms':{ [
-                      'p20']}
-                  }],
-            chart_options =
-                {'title': {
-                    'text': 'Results'},
-                 'xAxis': {
-                     'title': {
-                         'text': 'Researcher'}}})
-            
-                      
+    runs = Run.objects.filter(task=task)                
 
     return render(request, 'trec/view_task_runs.html',
-                  {'runs': runs, 'task': task, 'precision_chart': cht})
+                  {'runs': runs, 'task': task})
 
 def researchers(request):
     researchers = Researcher.objects.all()
