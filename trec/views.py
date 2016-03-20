@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from trec.forms import *
 from trec.models import Researcher, Task, Track
 from trec.utils import run_trec_eval
-
+import json
 from chartit import DataPool, Chart
 
 def index(request):
@@ -16,6 +16,55 @@ def index(request):
 
 def about(request):
     return render(request, 'trec/about.html')
+
+def ajax_results_query_responder(request):
+
+    if request.method == 'GET':
+
+        print request.GET['data']
+        data = json.loads(request.GET['data'])
+        print data
+        researchers = data['researchers']
+        tasks = data['tasks']
+        order_by = data['order_by']
+        direction = data['direction']
+        headers = data['headers']
+        results_for = data['results_for']
+        researcher_or_task = data['researcher_or_task']
+
+        if researchers != None:
+            try:
+                users = User.objects.filter(username__in=researchers)
+                researchers = Researcher.objects.filter(user=users)
+            except User.DoesNotExist, Researcher.DoesNotExist:
+                return HttpResponse('Error finding user', status=500)
+
+        if tasks != None:
+            try:
+                tasks = Task.objects.filter(pk__in=tasks)
+            except Task.DoesNotExist:
+                return HttpResponse('Error finding task', status=500)
+
+        if direction == 'ascending':
+            try:
+                runs = Run.objects.filter(researcher=researchers, task=tasks).order_by('-'+order_by)
+                direction = 'descending'
+            except Run.DoesNotExist:
+                return HttpResponse('Error finding Run', status=500)
+        else:
+            try:
+                runs = Run.objects.filter(researcher=researchers, task=tasks).order_by(order_by)
+                direction = 'ascending'
+            except Run.DoesNotExist:
+                return HttpResponse('Error finding Run', status=500)
+
+        if researcher_or_task == 'researcher':
+            return render(request, 'trec/table.html', {'rows': runs, 'headers': headers, 'direction': direction,
+                                                       'results_for': results_for, "researcher": True })
+        elif researcher_or_task == 'task':
+            return render(request, 'trec/table.html', {'rows': runs, 'headers': headers, 'direction': direction,
+                                                       'results_for': results_for, "task": True })
+
 
 def register(request):
     if request.method == 'POST':
@@ -89,7 +138,7 @@ def task_results(request, task_id):
         DataPool (
             series =
                 [{'options': {
-                    'source': Runs.objects.all()},
+                    'source': Run.objects.all()},
                   'terms': [
                       'researcher',
                       'map',

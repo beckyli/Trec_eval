@@ -18,7 +18,7 @@ urlpatterns = patterns('',
                        url(r'^add_track', views.add_track, name="add_track"),
                        url(r'^task/(?P<task_id>\d+)/results/$', views.task_results, name="task_results"),
                        url(r'^researchers/$', views.researchers, name='researchers'),
-                       url(r'^researcher/(?P<researcher_id>.+)/$', views.researcher, name="researcher"),
+                       url(r'^researcher/(?P<username>.+)/$', views.researcher, name="researcher"),
                        url(r'^ajax_get_res/$', views.ajax_results_query_responder, name="ajax_results"),
 )
 
