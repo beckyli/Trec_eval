@@ -8,20 +8,20 @@
 
 
 <h3>The following tracks are available:</h3>
-<ul>
   {% for track in tracks %}
-  <li><h3>{{ track.title }}</h3>
-    <ul>
-      {% for task in track.tasks %}
-      <li><p>{{ task.title }} -
-          {% if user.is_authenticated %}
-          <a href="{% url 'submit_run' task.pk %}">Submit results for this track</a>
-          {% endif %}
-          <a href="{% url 'task_results' task.pk %}">View results of this track</a>
+  <div class="panel panel-primary">
+	  <div class="panel-heading">{{ track.title }}</div>
+			<div class="panel-body">
+				{% for task in track.tasks %}
+					{{ task.title }}
+					{% if user.is_authenticated %}
+						<a href="{% url 'submit_run' task.pk %}">Submit results for this track</a>
+					{% endif %}
+					<a href="{% url 'task_results' task.pk %}">View results of this track</a>
 
-      </p></li>
-      {% endfor %}
-  </ul></li>
+				{% endfor %}
+			</div>
+	  </div>
+  
   {% endfor %}
-</ul>
 {% endblock %}
