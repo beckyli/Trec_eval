@@ -31,6 +31,7 @@ jamyspex: James Macdonald 2126890m
         pip install -r requirements.txt
 4. Set up the database.
 
+        python manage.py makemigrations trec
         python manage.py migrate
         python populate_trec.py
 5. Run the server.

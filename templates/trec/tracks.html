@@ -4,21 +4,24 @@
 
 {% block body_block %}
 
-    <h1>Tracks</h1>
+<h1>Tracks</h1>
 
 
-    <h3>The following tracks are available:</h3>
-    {% for track in tracks %}
-        <ul></ul><li><h3>{{ track.title }}</h3></li><ul>
-        {% for task in track.tasks %}
-            <li><p>{{ task.title }} -
-                {% if user.is_authenticated %}
-                <a href="{% url 'submit_run' task.pk %}">Submit results for this track</a>
-                {% endif %}
-                <a href="{% url 'task_results' task.pk %}">View results of this track</a>
+<h3>The following tracks are available:</h3>
+<ul>
+  {% for track in tracks %}
+  <li><h3>{{ track.title }}</h3>
+    <ul>
+      {% for task in track.tasks %}
+      <li><p>{{ task.title }} -
+          {% if user.is_authenticated %}
+          <a href="{% url 'submit_run' task.pk %}">Submit results for this track</a>
+          {% endif %}
+          <a href="{% url 'task_results' task.pk %}">View results of this track</a>
 
-                </p></li>
-        {% endfor %}
-</ul></ul>
-    {% endfor %}
+      </p></li>
+      {% endfor %}
+  </ul></li>
+  {% endfor %}
+</ul>
 {% endblock %}
