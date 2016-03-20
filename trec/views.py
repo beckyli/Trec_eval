@@ -178,9 +178,7 @@ def task_results(request, task_id):
     #
                       
 
-    return render(request, 'trec/view_task_runs.html',
-                  {'runs': runs, 'task': task})
-                   #'precision_chart': cht})
+    return render(request, 'trec/view_task_runs.html', {'runs': runs, 'task': task})
 
 def researchers(request):
     researchers = Researcher.objects.all()
@@ -215,11 +213,20 @@ def add_track(request):
 
 @login_required
 def profile(request):
+
     user = request.user
-    researcher = Researcher.objects.get(user=user)
-    runs = Run.objects.filter(researcher=researcher)
-    return render(request, 'trec/researcher.html', {'researcher': researcher,
-                                                    'runs': runs})
+
+    try:
+        researcher = Researcher.objects.get(user=user)
+
+        runs = Run.objects.filter(researcher=researcher)
+        return render(request, 'trec/researcher.html', {'researcher': researcher, 'runs': runs, 'admin': False})
+    except Researcher.DoesNotExist:
+        return render(request, 'trec/researcher.html', {'admin': True})
+
+
+
+
 
 @login_required
 def edit_profile(request):

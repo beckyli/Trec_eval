@@ -5,7 +5,7 @@ db.sqlite3
 !/media/judgement_files/aq.trec2005.qrels
 !/media/judgement_files/dg.trec.qrels
 !/media/judgement_files/ap.trec.qrels
-!/media/profile_images/default.jpg
+!/media/profile_images/default.png
 !/media/results/ap.trec.bm25.0.50.res # necessary for testing
 .coverage
 trec_eval
