@@ -133,53 +133,54 @@ def task_results(request, task_id):
         return redirect(index)
 
     runs = Run.objects.filter(task=task)
-
-    precision_data = \
-        DataPool (
-            series =
-                [{'options': {
-                    'source': Run.objects.all()},
-                  'terms': [
-                      'researcher',
-                      'map',
-                      'p10',
-                      'p20',]}
-                 ])
-    cht = Chart(
-            data_source = precision_data,
-            series_options = [
-                 {'options':{
-                    'type': 'column',
-                    'stacking': False,
-                    'stack': 0},
-                  'terms':{ [
-                      'map']}},
-
-                 {'options':{
-                    'type': 'column',
-                    'stacking': False,
-                    'stack': 1},
-                  'terms':{ [
-                      'p10']}},
-
-                 {'options':{
-                    'type': 'column',
-                    'stacking': False,
-                    'stack': 2},
-                  'terms':{ [
-                      'p20']}
-                  }],
-            chart_options =
-                {'title': {
-                    'text': 'Results'},
-                 'xAxis': {
-                     'title': {
-                         'text': 'Researcher'}}})
-            
+    #
+    # precision_data = \
+    #     DataPool (
+    #         series =
+    #             [{'options': {
+    #                 'source': Run.objects.all()},
+    #               'terms': [
+    #                   'researcher',
+    #                   'map',
+    #                   'p10',
+    #                   'p20',]}
+    #              ])
+    # cht = Chart(
+    #         data_source = precision_data,
+    #         series_options = [
+    #              {'options':{
+    #                 'type': 'column',
+    #                 'stacking': False,
+    #                 'stack': 0},
+    #               'terms':{ [
+    #                   'map']}},
+    #
+    #              {'options':{
+    #                 'type': 'column',
+    #                 'stacking': False,
+    #                 'stack': 1},
+    #               'terms':{ [
+    #                   'p10']}},
+    #
+    #              {'options':{
+    #                 'type': 'column',
+    #                 'stacking': False,
+    #                 'stack': 2},
+    #               'terms':{ [
+    #                   'p20']}
+    #               }],
+    #         chart_options =
+    #             {'title': {
+    #                 'text': 'Results'},
+    #              'xAxis': {
+    #                  'title': {
+    #                      'text': 'Researcher'}}})
+    #
                       
 
     return render(request, 'trec/view_task_runs.html',
-                  {'runs': runs, 'task': task, 'precision_chart': cht})
+                  {'runs': runs, 'task': task})
+                   #'precision_chart': cht})
 
 def researchers(request):
     researchers = Researcher.objects.all()

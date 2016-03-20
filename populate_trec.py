@@ -90,7 +90,7 @@ def add_researcher(uname, pro_pic=None, dis_name="", org="", web=""):
     u.save()
     r = Researcher.objects.get_or_create(user=u)[0]
     if pro_pic == None:
-        r.profile_pic = File(open(os.path.join(MEDIA_ROOT, "profile_pics", "default.jpg")))
+        r.profile_pic = File(open(os.path.join(MEDIA_ROOT, "profile_images", "default.png")))
     else:
         r.profile_pic = pro_pic
     r.website = web
