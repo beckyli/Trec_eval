@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Researcher',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('profile_pic', models.ImageField(upload_to=b'profile_pics', blank=True)),
+                ('profile_pic', models.ImageField(default=b'/home/james/Documents/Uni/WAD2/trec-eval/media/profile_pics/default.jpg', upload_to=b'/home/james/Documents/Uni/WAD2/trec-eval/media/profile_pics', blank=True)),
                 ('website', models.URLField(default=b'', max_length=1024, blank=True)),
                 ('display_name', models.CharField(default=b'', max_length=128)),
                 ('organisation', models.CharField(default=b'', max_length=128, blank=True)),
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(default=b'', max_length=128)),
                 ('description', models.CharField(default=b'', max_length=1024)),
-                ('results_file', models.FileField(upload_to=b'/home/paulius/trec-eval/media/results')),
+                ('results_file', models.FileField(upload_to=b'/home/james/Documents/Uni/WAD2/trec-eval/media/results')),
                 ('map', models.FloatField(null=True)),
                 ('p10', models.FloatField(null=True)),
                 ('p20', models.FloatField(null=True)),
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                 ('task_url', models.URLField(default=b'', max_length=1024)),
                 ('description', models.CharField(max_length=1024)),
                 ('year', models.CharField(default=b'', max_length=4)),
-                ('judgement_file', models.FileField(upload_to=b'/home/paulius/trec-eval/media/judgement_files')),
+                ('judgement_file', models.FileField(upload_to=b'/home/james/Documents/Uni/WAD2/trec-eval/media/judgement_files')),
             ],
             options={
             },

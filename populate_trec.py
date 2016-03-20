@@ -89,7 +89,9 @@ def add_researcher(uname, pro_pic=None, dis_name="", org="", web=""):
     u.set_password(uname)
     u.save()
     r = Researcher.objects.get_or_create(user=u)[0]
-    if pro_pic:
+    if pro_pic == None:
+        r.profile_pic = File(open(os.path.join(MEDIA_ROOT, "profile_pics", "default.jpg")))
+    else:
         r.profile_pic = pro_pic
     r.website = web
     r.display_name = dis_name
@@ -106,7 +108,7 @@ def add_track(tit, desc="", g="", url=""):
 
     return t
 
-def add_task(trac, tit, judge, url="", desc="", y=""):
+def add_task(trac, tit, url="", desc="", y="", judge=None):
     t = Task.objects.get_or_create(title=tit, track=trac)[0]
     t.task_url = url
     t.description = desc

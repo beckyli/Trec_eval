@@ -1,33 +1,16 @@
 {% extends 'trec/base.html' %}
 
 {% load staticfiles %}
-{% load chartit % }
-{{ precision_chart|load_charts:"container" }}
+{% load trec_extras %}
 
 {% block body_block %}
 
-		<h1>Here are all the runs for the {{ task.track.title }} {{ task.title }} task </h1>
+<h1>Here are all the runs for the {{ task.track.title }} {{ task.title }} task </h1>
 
-<table class = "table table-hover">
-            <thead>
-            <tr>
-                <th>Researcher</th>
-                <th>Mean Average Precision</th>
-                <th>Precision at 10</th>
-                <th>Precision at 20</th>
-            </tr>
-            </thead>
-            <tbody>
-        {% for run in runs %}
-            <tr>
-                <td><a href = "{% url 'researcher' run.researcher.user.username %}">{{  run.researcher.display_name  }}</a></td>
-                <td>{{ run.map }}</td>
-                <td>{{ run.p10 }}</td>
-                <td>{{ run.p20 }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
-	
-<div id='container'> Chart will be rendered here </div>
+<div class="row" id="results_table">
+    {% block results_block %}
+    {% get_results_list task %}
+    {% endblock %}
+</div>
+
 {% endblock %}
