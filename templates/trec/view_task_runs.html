@@ -5,12 +5,15 @@
 
 {% block body_block %}
 
-<h1>Here are all the runs for the {{ task.track.title }} {{ task.title }} task </h1>
+    <div class="row">
+        <h1>Here are all the runs for the {{ task.track.title }} {{ task.title }} task </h1>
+        <a href="{% url 'submit_run' task.pk %}">Submit a run for this task</a>
+    </div>
 
-<div class="row" id="results_table">
-    {% block results_block %}
-    {% get_results_list task %}
-    {% endblock %}
-</div>
+    <div class="row" id="results_table">
+        {% block results_block %}
+            {% get_results_list task %}
+        {% endblock %}
+    </div>
 
 {% endblock %}
